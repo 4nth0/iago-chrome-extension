@@ -5,7 +5,15 @@
   "content_scripts": [
       {
         "matches": ["https://www.linkedin.com/*"],
-        "js": ["script.js"]
+        "js": [
+          "src/core/Iago.js",
+          "src/core/SnippetManager.js",
+          "src/core/TagManager.js",
+          "src/core/Utils.js",
+          "src/connectors/pageObject.js",
+          "src/connectors/linkedin.js",
+          "script.js"
+        ]
       }
   ],
   "options_page": "options/index.html"
