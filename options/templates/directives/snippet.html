@@ -1,0 +1,32 @@
+<article class="row">
+  <header class="col-md-12">
+    <h1 ng-click="$ctrl.toggleExpand()" ng-hide="$ctrl.isEditable">{{$ctrl.snippet.title}}</h1>
+    <input
+      type="text"
+      ng-show="$ctrl.isEditable"
+      ng-model="$ctrl.snippet.title"
+      placeholder="Untitled">
+  </header>
+  <div ng-show="$ctrl.isExpanded" class="col-md-12">
+    <pre ng-hide="$ctrl.isEditable" ng-click="$ctrl.toggleEditable()">{{$ctrl.snippet.content}}</pre>
+    <div ng-show="$ctrl.isEditable">
+      <textarea ng-model="$ctrl.snippet.content" placeholder="Type your snippet here"></textarea>
+      <select ng-model="$ctrl.snippet.langage">
+        <option value="fr_FR">fr_FR</option>
+        <option value="en_EN">en_EN</option>
+      </select>
+      <button ng-click="$ctrl.cancel()">cancel</button>
+      <button ng-click="$ctrl.save()">save</button>
+    </div>
+  </div>
+</article>
+
+<style>
+  iago-snippet h1 {
+    font-size:14px;
+  }
+  iago-snippet textarea{
+    width:200px;
+    min-height:100px;
+  }
+</style>

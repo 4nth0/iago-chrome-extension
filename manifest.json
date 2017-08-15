@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+  "version": "0.1",
+  "name": "Iago",
+  "content_scripts": [
+      {
+        "matches": ["https://www.linkedin.com/*"],
+        "js": ["script.js"]
+      }
+  ],
+  "options_page": "options/index.html"
+}
