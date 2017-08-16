@@ -1,30 +1,40 @@
 class Iago {
   constructor() {
-    this.Tag     = new TagManager();
     this.utils   = new Utils();
     this.Snippet = new SnippetManager();
+    this.Tag     = new TagManager();
 
     this.loadPageObject();
   }
 
   loadPageObject() {
-    // @TODO Add proxy to load right Page Object ( Linkedin, Hopwork, .. )
-    this.UI = new LinkedinPageObject();
+    switch(document.location.hostname) {
+      case 'www.hopwork.fr':
+        this.Interface = new HopworkPageObject();
+        break;
+      case 'www.linkedin.fr':
+        this.Interface = new LinkedinPageObject();
+        break;
+      default:
+        throw 'Unknow hostname.';
 
-    this.UI.onUpdateSelectedSnippet((snippetIndex) => {
+    }
+
+
+    this.Interface.onUpdateSelectedSnippet((snippetIndex) => {
       const snippet = this.Snippet.getById(snippetIndex);
 
       if(snippet) {
-        const formatedSnippet = this.Tag.formateSnippet(snippet);
-        this.UI.setMessage(formatedSnippet.content);
+        const formatedSnippet = this.Tag.formateSnippet(snippet, this.Interface);
+        this.Interface.setMessage(formatedSnippet.content);
       }
     });
   }
 
   run() {
     const successHandler = (snippets) => {
-      this.UI.setSnippets(snippets);
-      this.UI.displaySnippets();
+      this.Interface.setSnippets(snippets);
+      this.Interface.displaySnippets();
     };
 
     const errorhandler = () => {};
@@ -34,6 +44,6 @@ class Iago {
   }
 
   clean() {
-    this.UI.clean();
+    this.Interface.clean();
   }
 }

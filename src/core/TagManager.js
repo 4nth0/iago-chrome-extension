@@ -1,7 +1,6 @@
 class TagManager {
   constructor() {
     this.utils  = new Utils();
-    this.ui     = new LinkedinPageObject();
     this.SNIPPET_TAG_REGEX = /\{\{(\w*)\}\}/ig;
   }
 
@@ -9,10 +8,10 @@ class TagManager {
     return this.SNIPPET_TAG_REGEX.test(snippet.content);
   }
 
-  applyTag(tag, snippetContent) {
+  applyTag(tag, snippetContent, Interface) {
     switch(tag) {
       case '{{firstname}}':
-        const firstname = this.ui.getFirstname();
+        const firstname = Interface.getFirstname();
         return snippetContent.replace(tag, firstname);
         break;
       default:
@@ -21,7 +20,7 @@ class TagManager {
     }
   }
 
-  formateSnippet(snippet) {
+  formateSnippet(snippet, Interface) {
     const snippetCopy = this.utils.copyObject(snippet);
     const isTagsInsideSnippet = this.snippetContainTags(snippetCopy);
 
@@ -30,7 +29,7 @@ class TagManager {
       const matches = snippetCopy.content.match(this.SNIPPET_TAG_REGEX);
 
       for (let i = 0; i < matches.length; i++) {
-        snippetCopy.content = this.applyTag(matches[i], snippetCopy.content);
+        snippetCopy.content = this.applyTag(matches[i], snippetCopy.content, Interface);
       }
 
       return snippetCopy;
